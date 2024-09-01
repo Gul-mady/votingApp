@@ -8,6 +8,6 @@ router.put('/:candidateID', jwtAuth, candidateController.updateCandidate); //onl
 router.delete('/:candidateID', jwtAuth, candidateController.removeCandidate) // only Admin can delete data of Candidates
 router.post('/vote/:candidateID', jwtAuth, candidateController.userVote); // only user can vote 
 router.get('/vote/count', candidateController.voteCount); // voteCounts of each candidate
-router.get('/getCandidates', jwtAuth, candidateController.getAll); // only admin can see candidates list
+router.get('/getCandidates', candidateController.getAll); // see candidates list
 
 module.exports = router
