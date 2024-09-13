@@ -16,7 +16,7 @@ require('./database/connection');
 
 // app.use(cors(corsOptions)); // Apply CORS options
 
-const allowedOrigins = ['http://localhost:3000', 'https://your-frontend-url.com'];
+const allowedOrigins = ['http://localhost:3000', 'https://lustrous-custard-f854e0.netlify.app/'];
 app.use(cors({
   origin: (origin, callback) => {
     if (allowedOrigins.includes(origin) || !origin) {
