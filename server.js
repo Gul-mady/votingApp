@@ -7,14 +7,17 @@ require('dotenv').config();
 require('./database/connection');
 
 // Define CORS options
-const corsOptions = {
-  origin: 'http://localhost:3000', // Change this to your frontend URL
-  methods: 'GET,POST,PUT,DELETE,OPTIONS',
-  allowedHeaders: 'Content-Type,Authorization,x-access-token',
-  credentials: true, // If you want to allow cookies or authentication headers
-};
+// const corsOptions = {
+//   origin: 'http://localhost:3000', // Change this to your frontend URL
+//   methods: 'GET,POST,PUT,DELETE,OPTIONS',
+//   allowedHeaders: 'Content-Type,Authorization,x-access-token',
+//   credentials: true, // If you want to allow cookies or authentication headers
+// };
 
-app.use(cors(corsOptions)); // Apply CORS options
+// app.use(cors(corsOptions)); // Apply CORS options
+
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
