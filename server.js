@@ -9,7 +9,7 @@ require('./database/connection');
 const corsOptions = {
   origin: (origin, callback) => {
     const allowedOrigins = [
-      'https://lustrous-custard-f854e0.netlify.app',
+      'https://votingappmadysteam.netlify.app',
       'http://localhost:3000'
     ];
     if (!origin || allowedOrigins.includes(origin)) {
