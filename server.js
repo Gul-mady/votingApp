@@ -16,10 +16,17 @@ require('./database/connection');
 
 // app.use(cors(corsOptions)); // Apply CORS options
 
-app.use(cors({
-  origin: 'https://lustrous-custard-f854e0.netlify.app/' // Allow your Netlify domain
-}));
+// CORS options
+const corsOptions = {
+  origin: 'https://lustrous-custard-f854e0.netlify.app', // Ensure no trailing slash
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type,Authorization'
+};
 
+app.use(cors(corsOptions));
+
+// For preflight requests
+app.options('*', cors(corsOptions));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
