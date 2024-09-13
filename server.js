@@ -6,29 +6,29 @@ const app = express();
 require('dotenv').config();
 require('./database/connection');
 
-// Define CORS options
-// const corsOptions = {
-//   origin: 'http://localhost:3000', // Change this to your frontend URL
-//   methods: 'GET,POST,PUT,DELETE,OPTIONS',
-//   allowedHeaders: 'Content-Type,Authorization,x-access-token',
-//   credentials: true, // If you want to allow cookies or authentication headers
-// };
-
-// app.use(cors(corsOptions)); // Apply CORS options
-
-// CORS options
 const corsOptions = {
-  origin: [
-    'https://lustrous-custard-f854e0.netlify.app', 
-    'http://localhost:3000'
-  ],  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: 'Content-Type,Authorization,x-access-token'
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      'https://lustrous-custard-f854e0.netlify.app',
+      'http://localhost:3000'
+    ];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true); // Allow the request
+    } else {
+      callback(new Error('Not allowed by CORS')); // Reject the request
+    }
+  },
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  allowedHeaders: 'Content-Type,Authorization,x-access-token',
+  credentials: true // Allow credentials
 };
 
+// Apply CORS middleware
 app.use(cors(corsOptions));
 
 // For preflight requests
 app.options('*', cors(corsOptions));
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
