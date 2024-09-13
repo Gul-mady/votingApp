@@ -20,7 +20,7 @@ require('./database/connection');
 const corsOptions = {
   origin: 'https://lustrous-custard-f854e0.netlify.app', // Ensure no trailing slash
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: 'Content-Type,Authorization'
+  allowedHeaders: 'Content-Type,Authorization,x-access-token'
 };
 
 app.use(cors(corsOptions));
