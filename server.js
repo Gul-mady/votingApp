@@ -21,7 +21,7 @@ const corsOptions = {
   },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
   allowedHeaders: 'Content-Type,Authorization,x-access-token',
-  // credentials: true // Allow credentials
+  credentials: true // Allow credentials
 };
 
 // Apply CORS middleware
