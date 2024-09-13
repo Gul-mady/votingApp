@@ -16,7 +16,17 @@ require('./database/connection');
 
 // app.use(cors(corsOptions)); // Apply CORS options
 
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+const allowedOrigins = ['http://localhost:3000', 'https://your-frontend-url.com'];
+app.use(cors({
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
