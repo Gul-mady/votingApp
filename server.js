@@ -16,16 +16,8 @@ require('./database/connection');
 
 // app.use(cors(corsOptions)); // Apply CORS options
 
-const allowedOrigins = ['https://lustrous-custard-f854e0.netlify.app/'];
 app.use(cors({
-  origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
+  origin: 'https://lustrous-custard-f854e0.netlify.app/' // Allow your Netlify domain
 }));
 
 
