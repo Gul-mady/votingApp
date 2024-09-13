@@ -40,12 +40,16 @@ const userSchema = new mongoose.Schema({
     isVoted: {
         type: Boolean,
         default: false,
+    },
+    profilePicture: {
+        type: String,
+        default: ''
     }
 });
 
 // Pre-save hook to hash the password before saving
 userSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) return next();
+    if (!this.isModified('password')) return next(); // Only hash if password is modified
 
     try {
         const salt = await bcrypt.genSalt(10);
@@ -57,12 +61,20 @@ userSchema.pre('save', async function (next) {
 });
 
 // Method to compare passwords
-userSchema.methods.comparePassword = async function (userPassword) {
-    if (!userPassword || !this.password) {
-        throw new Error('Password or hash not provided');
-    }
-    return await bcrypt.compare(userPassword, this.password);
+userSchema.methods.comparePassword = function (userPassword) {
+    return bcrypt.compare(userPassword, this.password)
+        .then(isMatch => {
+            if (!isMatch) {
+                throw new Error('Invalid password');
+            }
+            return true; // Return true if the password matches
+        })
+        .catch(err => {
+            throw new Error(err.message); // Forward the error message
+        });
 };
+
+
 
 
 

@@ -2,8 +2,10 @@ const express = require('express')
 const router = express.Router()
 const userController = require('../controller/userController');
 const jwtAuth = require('../jwtAuth');
+const upload = require('../middleware/upload'); // Import your multer configuration
 
-router.post('/signup', userController.register); //register in VotingApp
+
+router.post('/signup', upload.single('file'), userController.register); //register in VotingApp
 router.post('/login', userController.authenticate); //Login via identityCard and Password
 router.put('/:userId', userController.updateUser); // User can update his password using identitycardNumber and currentPassword
 router.get('/userProfiles', jwtAuth, userController.getAll); // only admin can access he can see the data of users

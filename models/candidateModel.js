@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 mongoose.pluralize(null)
-// const bcrypt = require('bcrypt')
 
 
 

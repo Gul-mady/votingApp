@@ -29,12 +29,12 @@ module.exports = {
             }
 
             // Log admin role confirmation
-            console.log('Admin role found');
+            // console.log('Admin role found');
 
             // Create a new candidate
             const newCandidate = await candidateModel.create(req.body);
 
-            console.log('Data saved');
+            // console.log('Data saved');
             // Respond with the candidate data
             res.status(201).json({
                 message: 'Candidate signed up',
@@ -119,9 +119,12 @@ module.exports = {
                 return res.status(404).json({ message: 'User does not exist' });
             }
 
+            if (user.age < 18) {
+                return res.status(403).json({ message: 'You are not eligible to vote because you are under 18' });
+            }
             // Check if the user has already voted
             if (user.isVoted) {
-                return res.status(400).json({ message: 'You have already voted' });
+                return res.status(400).json({ message: 'You have already voted' }); // isVoted is boolean field form userModel
             }
 
             // Check if the user is an admin

@@ -17,7 +17,7 @@ const jwtAuth = (req, res, next) => {
     }
     catch (err) {
         console.error(err);
-        res.status(401).json({ error: 'Invalid Token' })
+        res.status(401).json({ error: 'Internal server error' })
     }
 }
 module.exports = jwtAuth;
