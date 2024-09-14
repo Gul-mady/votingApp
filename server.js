@@ -10,7 +10,7 @@ const corsOptions = {
   origin: (origin, callback) => {
     const allowedOrigins = [
       'https://votingappmadysteam.netlify.app',
-      'https://voting-app-frontend-one.vercel.app',
+      'https://voting-app-frontend-six.vercel.app',
       'http://localhost:3000'
     ];
     if (!origin || allowedOrigins.includes(origin)) {
