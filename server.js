@@ -6,10 +6,12 @@ const app = express();
 require('dotenv').config();
 require('./database/connection');
 
+
+// Define CORS options
 const corsOptions = {
   origin: (origin, callback) => {
     const allowedOrigins = [
-      'http://localhost:5173'
+      'http://localhost:5173' // Add other allowed origins as needed
     ];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true); // Allow the request
@@ -27,7 +29,6 @@ app.use(cors(corsOptions));
 
 // For preflight requests
 app.options('*', cors(corsOptions));
-
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
