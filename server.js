@@ -11,7 +11,8 @@ require('./database/connection');
 const corsOptions = {
   origin: (origin, callback) => {
     const allowedOrigins = [
-      'https://voting-app-vite-frontend.vercel.app' // Add other allowed origins as needed
+      'https://voting-app-vite-frontend.vercel.app',
+      'http://localhost:3000'
     ];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true); // Allow the request
