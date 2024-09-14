@@ -11,7 +11,7 @@ require('./database/connection');
 const corsOptions = {
   origin: (origin, callback) => {
     const allowedOrigins = [
-      '' // Add other allowed origins as needed
+      'http://localhost:5173' // Add other allowed origins as needed
     ];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true); // Allow the request
