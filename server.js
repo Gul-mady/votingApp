@@ -11,6 +11,7 @@ const corsOptions = {
     const allowedOrigins = [
       'https://votingappmadysteam.netlify.app',
       'https://voting-app-frontend-six.vercel.app',
+      'http://localhost:5173',
       'http://localhost:3000'
     ];
     if (!origin || allowedOrigins.includes(origin)) {
