@@ -32,7 +32,7 @@ require('./database/connection');
 // // For preflight requests
 // app.options('*', cors(corsOptions));
 
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173'];
+const allowedOrigins = ['http://localhost:5173'];
 
 app.use(cors({
   origin: function(origin, callback) {
