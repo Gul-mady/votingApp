@@ -44,7 +44,14 @@ require('./database/connection');
 //   }
 // }));
 
-app.use(cors())
+// Configure CORS
+const corsOptions = {
+  origin: 'http://localhost:5173', // Allow requests from this origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify methods if needed
+  allowedHeaders: ['Content-Type', 'Authorization, x-access-token'] // Specify headers if needed
+};
+
+app.use(cors(corsOptions));
 
 
 
