@@ -1,83 +1,3 @@
-// const express = require('express');
-// const cors = require('cors');
-// const path = require('path');
-// const bodyParser = require('body-parser');
-// const app = express();
-// require('dotenv').config();
-// require('./database/connection');
-
-
-// // Define CORS options
-// // const corsOptions = {
-// //   origin: (origin, callback) => {
-// //     const allowedOrigins = [
-// //       'https://voting-app-vite-frontend.vercel.app',
-// //       'http://localhost:3000',
-// //       'http://localhost:5173'
-// //     ];
-// //     if (!origin || allowedOrigins.includes(origin)) {
-// //       callback(null, true); // Allow the request
-// //     } else {
-// //       callback(new Error('Not allowed by CORS')); // Reject the request
-// //     }
-// //   },
-// //   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-// //   allowedHeaders: 'Content-Type,Authorization,x-access-token',
-// //   credentials: true // Allow credentials
-// // };
-
-// // // Apply CORS middleware
-// // app.use(cors(corsOptions));
-
-// // // For preflight requests
-// // app.options('*', cors(corsOptions));
-
-// // const allowedOrigins = ['http://localhost:5173'];
-
-// // app.use(cors({
-// //   origin: function(origin, callback) {
-// //     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-// //       callback(null, true);
-// //     } else {
-// //       callback(new Error('Not allowed by CORS'));
-// //     }
-// //   }
-// // }));
-
-// // Configure CORS
-// const corsOptions = {
-//   origin: 'http://localhost:5173', // Allow requests from this origin
-//   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify methods if needed
-//   allowedHeaders: ['Content-Type', 'Authorization', 'x-access-token'] // Specify headers if need
-// };
-
-// app.use(cors(corsOptions));
-
-
-
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
-
-// // Serve static files from the 'uploads' directory
-// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// app.get("/", (req, res) => {
-//     res.send("welcome to voting app");
-// });
-
-// const userRoute = require('./routes/userRoute');
-// app.use('/user', userRoute);
-
-// const candidateRoute = require('./routes/candidateRoute');
-// app.use('/candidate', candidateRoute);
-
-// const PORT = process.env.PORT || 4000;
-// app.listen(PORT, () => {
-//     console.log(`Your server is running on port# ${PORT}`);
-// });
-
-
-
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -86,26 +6,54 @@ const app = express();
 require('dotenv').config();
 require('./database/connection');
 
-// Define CORS options for specific routes
+
+// Define CORS options
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     const allowedOrigins = [
+//       'https://voting-app-vite-frontend.vercel.app',
+//       'http://localhost:3000',
+//       'http://localhost:5173'
+//     ];
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true); // Allow the request
+//     } else {
+//       callback(new Error('Not allowed by CORS')); // Reject the request
+//     }
+//   },
+//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+//   allowedHeaders: 'Content-Type,Authorization,x-access-token',
+//   credentials: true // Allow credentials
+// };
+
+// // Apply CORS middleware
+// app.use(cors(corsOptions));
+
+// // For preflight requests
+// app.options('*', cors(corsOptions));
+
+// const allowedOrigins = ['http://localhost:5173'];
+
+// app.use(cors({
+//   origin: function(origin, callback) {
+//     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   }
+// }));
+
+// Configure CORS
 const corsOptions = {
-  origin: 'http://localhost:5173', // Allow requests from this origin
+  origin: ['http://localhost:5173', 'http://localhost:3000'], // Allow requests from this origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify methods if needed
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-access-token'], // Specify headers if needed
-  credentials: true // Allow credentials
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-access-token'] // Specify headers if need
 };
 
-// Middleware to handle CORS for the /user/profile route
-const profileCorsMiddleware = (req, res, next) => {
-  // Check if the request is for the /user/profile route
-  if (req.path.startsWith('/user/profile')) {
-    cors(corsOptions)(req, res, next); // Apply CORS settings
-  } else {
-    next(); // Proceed to other middlewares if not /user/profile route
-  }
-};
+app.use(cors(corsOptions));
 
-// Apply the CORS middleware conditionally
-app.use(profileCorsMiddleware);
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -114,18 +62,14 @@ app.use(bodyParser.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get("/", (req, res) => {
-    res.send("Welcome to Voting App");
+    res.send("welcome to voting app");
 });
 
-// Import and use routes
 const userRoute = require('./routes/userRoute');
 app.use('/user', userRoute);
 
 const candidateRoute = require('./routes/candidateRoute');
 app.use('/candidate', candidateRoute);
-
-// Handle preflight requests for CORS
-app.options('*', cors(corsOptions));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
