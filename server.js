@@ -12,7 +12,7 @@ const corsOptions = {
   origin: (origin, callback) => {
     const allowedOrigins = [
       'https://voting-app-vite-frontend.vercel.app',
-      'http://localhost:3000',
+      // 'http://localhost:3000',
       'http://localhost:5173'
     ];
     if (!origin || allowedOrigins.includes(origin)) {
@@ -27,10 +27,10 @@ const corsOptions = {
 };
 
 // Apply CORS middleware
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // For preflight requests
-// app.options('*', cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
