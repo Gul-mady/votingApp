@@ -8,29 +8,42 @@ require('./database/connection');
 
 
 // Define CORS options
-const corsOptions = {
-  origin: (origin, callback) => {
-    const allowedOrigins = [
-      'https://voting-app-vite-frontend.vercel.app',
-      'http://localhost:3000',
-      'http://localhost:5173'
-    ];
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true); // Allow the request
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     const allowedOrigins = [
+//       'https://voting-app-vite-frontend.vercel.app',
+//       'http://localhost:3000',
+//       'http://localhost:5173'
+//     ];
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true); // Allow the request
+//     } else {
+//       callback(new Error('Not allowed by CORS')); // Reject the request
+//     }
+//   },
+//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+//   allowedHeaders: 'Content-Type,Authorization,x-access-token',
+//   credentials: true // Allow credentials
+// };
+
+// // Apply CORS middleware
+// app.use(cors(corsOptions));
+
+// // For preflight requests
+// app.options('*', cors(corsOptions));
+
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173'];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS')); // Reject the request
+      callback(new Error('Not allowed by CORS'));
     }
-  },
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-  allowedHeaders: 'Content-Type,Authorization,x-access-token',
-  credentials: true // Allow credentials
-};
+  }
+}));
 
-// Apply CORS middleware
-app.use(cors(corsOptions));
-
-// For preflight requests
-app.options('*', cors(corsOptions));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
