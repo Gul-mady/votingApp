@@ -12,7 +12,8 @@ const corsOptions = {
   origin: (origin, callback) => {
     const allowedOrigins = [
       'https://voting-app-vite-frontend.vercel.app',
-      'http://localhost:3000'
+      'http://localhost:3000',
+      'http://localhost:5173'
     ];
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true); // Allow the request
