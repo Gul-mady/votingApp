@@ -48,7 +48,7 @@ require('./database/connection');
 const corsOptions = {
   origin: 'http://localhost:5173', // Allow requests from this origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify methods if needed
-  allowedHeaders: ['Content-Type', 'Authorization, x-access-token'] // Specify headers if needed
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-access-token'] // Specify headers if need
 };
 
 app.use(cors(corsOptions));
