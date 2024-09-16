@@ -46,7 +46,7 @@ require('./database/connection');
 
 // Configure CORS
 const corsOptions = {
-  origin: ['http://localhost:5173', 'http://localhost:3000'], // Allow requests from this origin
+  origin: ['http://localhost:5173', 'https://voting-app-vite-frontend-afw2.vercel.app'], // Allow requests from this origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify methods if needed
   allowedHeaders: ['Content-Type', 'Authorization', 'x-access-token'], // Specify headers if need
   credentials: true // Allow credentials

@@ -96,7 +96,7 @@ module.exports = {
             const isMatch = await userInfo.comparePassword(password);
 
             if (isMatch) {
-                const token = jwt.sign({ id: userInfo._id }, process.env.JWT_SECRET, { expiresIn: '5m' });
+                const token = jwt.sign({ id: userInfo._id }, process.env.JWT_SECRET, { expiresIn: '10m' });
                 return res.json({ status: "success", message: "User found!", token: token });
             } else {
                 return res.status(401).json({ status: "error", message: "Authentication failed. Wrong password" });
