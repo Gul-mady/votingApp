@@ -60,7 +60,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Serve static files from the 'uploads' directory
-app.use('/uploads', express.static(path.join(__dirname, 'uploads/')));
+app.use('/upload', express.static(path.join(__dirname, 'upload/')));
 
 app.get("/", (req, res) => {
     res.send("welcome to voting app");
