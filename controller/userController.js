@@ -54,33 +54,48 @@ module.exports = {
         try {
             const { role } = req.body;
     
+            console.log('Received data:', { ...req.body, file: req.file });
+    
             // Check if an admin already exists
             if (role === 'admin') {
+                console.log('Checking for existing admin...');
                 const existingAdmin = await userModel.findOne({ role: 'admin' });
                 if (existingAdmin) {
+                    console.log('Admin already exists.');
                     return res.status(400).json({ message: "An admin already exists. Only one admin is allowed." });
                 }
+                console.log('No existing admin found.');
             }
     
             // Ensure file handling
-            if (req.profilePicture && !req.profilePicture.path) {
+            if (req.file && !req.file.path) {
+                console.error('File upload failed. No file path.');
                 throw new Error('File upload failed. Please try again.');
+            } else if (req.file) {
+                console.log('File uploaded successfully. File path:', req.file.path);
+            } else {
+                console.log('No file uploaded.');
             }
     
             // Combine the file path with other data from req.body
             const userData = {
                 ...req.body,
-                profilePicture: req.profilePicture ? req.profilePicture.path : '' // Add the file path for the image
+                profilePicture: req.file ? req.file.path : '' // Add the file path for the image
             };
+    
+            console.log('Creating user with data:', userData);
     
             // Create a new user with combined data
             const user = await userModel.create(userData);
+            console.log('User created successfully:', user);
     
             // Generate a JWT token
             const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+            console.log('JWT token generated:', token);
     
             // After creating the user, you can exclude sensitive data:
             const { password, ...userWithoutPassword } = user.toObject();
+            console.log('User data without password:', userWithoutPassword);
     
             // Respond with the token and user data
             res.status(201).json({
@@ -96,6 +111,7 @@ module.exports = {
             res.status(500).json({ message: "Something went wrong", error: err.message });
         }
     }
+    
     
     
     ,
