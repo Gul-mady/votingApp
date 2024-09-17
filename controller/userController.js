@@ -63,7 +63,7 @@ module.exports = {
             }
     
             // Ensure file handling
-            if (req.file && !req.file.path) {
+            if (req.profilePicture && !req.profilePicture.path) {
                 throw new Error('File upload failed. Please try again.');
             }
     
