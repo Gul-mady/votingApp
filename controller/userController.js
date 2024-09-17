@@ -54,6 +54,7 @@ module.exports = {
         try {
             const { role } = req.body;
     
+            // Log received data for debugging
             console.log('Received data:', { ...req.body, file: req.file });
     
             // Check if an admin already exists
@@ -68,10 +69,7 @@ module.exports = {
             }
     
             // Ensure file handling
-            if (req.file && !req.file.path) {
-                console.error('File upload failed. No file path.');
-                throw new Error('File upload failed. Please try again.');
-            } else if (req.file) {
+            if (req.file) {
                 console.log('File uploaded successfully. File path:', req.file.path);
             } else {
                 console.log('No file uploaded.');
@@ -83,8 +81,6 @@ module.exports = {
                 profilePicture: req.file ? req.file.path : '' // Add the file path for the image
             };
     
-            console.log('Creating user with data:', userData);
-    
             // Create a new user with combined data
             const user = await userModel.create(userData);
             console.log('User created successfully:', user);
@@ -93,7 +89,7 @@ module.exports = {
             const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
             console.log('JWT token generated:', token);
     
-            // After creating the user, you can exclude sensitive data:
+            // Exclude sensitive data
             const { password, ...userWithoutPassword } = user.toObject();
             console.log('User data without password:', userWithoutPassword);
     
@@ -111,6 +107,7 @@ module.exports = {
             res.status(500).json({ message: "Something went wrong", error: err.message });
         }
     }
+    
     
     
     
