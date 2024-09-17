@@ -7,10 +7,53 @@ require('dotenv').config();
 module.exports = {
 
     // Register user with image now
+    // register: async (req, res) => {
+    //     try {
+    //         const { role } = req.body;
+
+    //         // Check if an admin already exists
+    //         if (role === 'admin') {
+    //             const existingAdmin = await userModel.findOne({ role: 'admin' });
+    //             if (existingAdmin) {
+    //                 return res.status(400).json({ message: "An admin already exists. Only one admin is allowed." });
+    //             }
+    //         }
+
+
+    //         // Combine the file path with other data from req.body
+    //         const userData = {
+    //             ...req.body, // This spreads all the form fields from req.body
+    //             profilePicture: req.file ? req.file.path : '' // Add the file path for the image
+    //         };
+
+    //         // Create a new user with combined data
+    //         const user = await userModel.create(userData);
+
+    //         // Generate a JWT token
+    //         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+
+    //         // After creating the user, you can exclude sensitive data:
+    //         const { password, ...userWithoutPassword } = user.toObject();
+
+    //         // Respond with the token and user data
+    //         res.status(201).json({
+    //             message: "Signed up successfully",
+    //             token,
+    //             data: userWithoutPassword
+    //         });
+    //     } catch (err) {
+    //         // Send error response
+    //         res.status(500).json({ message: "Something went wrong", error: err.message });
+    //     }
+    // }
+
+
+
+
     register: async (req, res) => {
         try {
             const { role } = req.body;
-
+    
             // Check if an admin already exists
             if (role === 'admin') {
                 const existingAdmin = await userModel.findOne({ role: 'admin' });
@@ -18,23 +61,27 @@ module.exports = {
                     return res.status(400).json({ message: "An admin already exists. Only one admin is allowed." });
                 }
             }
-
-
+    
+            // Ensure file handling
+            if (req.file && !req.file.path) {
+                throw new Error('File upload failed. Please try again.');
+            }
+    
             // Combine the file path with other data from req.body
             const userData = {
-                ...req.body, // This spreads all the form fields from req.body
+                ...req.body,
                 profilePicture: req.file ? req.file.path : '' // Add the file path for the image
             };
-
+    
             // Create a new user with combined data
             const user = await userModel.create(userData);
-
+    
             // Generate a JWT token
             const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-
+    
             // After creating the user, you can exclude sensitive data:
             const { password, ...userWithoutPassword } = user.toObject();
-
+    
             // Respond with the token and user data
             res.status(201).json({
                 message: "Signed up successfully",
@@ -42,10 +89,14 @@ module.exports = {
                 data: userWithoutPassword
             });
         } catch (err) {
+            // Log the error for debugging
+            console.error('Signup failed:', err);
+    
             // Send error response
             res.status(500).json({ message: "Something went wrong", error: err.message });
         }
     }
+    
     ,
 
 

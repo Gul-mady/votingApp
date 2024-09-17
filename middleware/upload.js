@@ -1,8 +1,6 @@
 const multer = require('multer');
 const path = require('path');
 
-
-
 // Multer setup for image upload
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -13,6 +11,23 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage });
+// File filter to accept only images
+const fileFilter = (req, file, cb) => {
+    const allowedTypes = ['image/jpeg', 'image/png'];
+    if (allowedTypes.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(new Error('Invalid file type. Only JPEG and PNG files are allowed.'), false);
+    }
+};
+
+// Multer configuration
+const upload = multer({
+    storage,
+    fileFilter,
+    limits: {
+        fileSize: 2 * 1024 * 1024 // Limit file size to 2MB
+    }
+});
 
 module.exports = upload;
