@@ -70,7 +70,7 @@ module.exports = {
             // Combine the file path with other data from req.body
             const userData = {
                 ...req.body,
-                profilePicture: req.file ? req.file.path : '' // Add the file path for the image
+                file: req.file ? req.file.path : '' // Add the file path for the image
             };
     
             // Create a new user with combined data
