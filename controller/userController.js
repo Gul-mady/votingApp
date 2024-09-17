@@ -9,17 +9,17 @@ module.exports = {
     // Register user with image now
     register: async (req, res) => {
         try {
-                    const { role } = req.body;
-        
-                    // Check if an admin already exists
-                    if (role === 'admin') {
-                        const existingAdmin = await userModel.findOne({ role: 'admin' });
-                        if (existingAdmin) {
-                            return res.status(400).json({ message: "An admin already exists. Only one admin is allowed." });
-                        }
-                    }
-                    
-        
+            const { role } = req.body;
+
+            // Check if an admin already exists
+            if (role === 'admin') {
+                const existingAdmin = await userModel.findOne({ role: 'admin' });
+                if (existingAdmin) {
+                    return res.status(400).json({ message: "An admin already exists. Only one admin is allowed." });
+                }
+            }
+
+
             // Combine the file path with other data from req.body
             const userData = {
                 ...req.body, // This spreads all the form fields from req.body
@@ -144,10 +144,10 @@ module.exports = {
             console.error(err);
             res.status(500).json({ error: 'Internal server error' });
         }
-    }  ,
+    },
 
 
-    // only admin can access Users data list
+    // only admin can access Users list
     getAll: async function (req, res) {
         try {
             const results = await userModel.find();

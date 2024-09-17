@@ -48,7 +48,7 @@ module.exports = {
     },
 
 
-    // update user
+    // update candidate
     updateCandidate: async (req, res) => {
         try {
             // Check if the user has an admin role
@@ -167,7 +167,6 @@ module.exports = {
                 };
             });
 
-            // Return the voteRecord with a status code of 200 (OK)
             return res.status(200).json({ voteRecord });
 
         } catch (err) {
