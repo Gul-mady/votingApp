@@ -8,7 +8,7 @@ const mongoURL = process.env.MONGODB_URL; // Ensure this environment variable is
 
 // Connect to MongoDB
 mongoose.connect(mongoURL, {
-  useUnifiedTopology: true,
+ 
 }).then(() => {
   console.log('Connected to MongoDB');
 }).catch((err) => {
